@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>김윤우 kim yunu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    
+</head>
+<body>
+    <div id="container">
+        <div class="main-text-container">
+            <h1 class="main_text" style="margin: 5px 0 5px 0;">KIMYUNU</h1>
+            <p id="info-toggle" class="main_text" style="margin: 5px 0 5px 0;">INFO&nbsp;<span id="indicator"> &gt;</span></p>
+        </div>
+        <div id="contact-details" class="hidden">
+            <p class="main_text contact-line"><span class="contact-label">MAIL</span><span>:&nbsp;</span><span class="contact-value"><a href="mailto:info@kimyunu.com">info@kimyunu.com</a></span></p>
+            <p class="main_text contact-line"><span class="contact-label">PHONE</span><span>:&nbsp;</span><span class="contact-value"><a href="tel:010-2439-3919">010-2439-3919</a></span></p>
+            <p class="main_text contact-line"><span class="contact-label">IG</span><span>:&nbsp;</span><span class="contact-value"><a href="https://www.instagram.com/kim.yunu" target="_blank">@kim.yunu</a></span></p>
+        </div>
+        <p id="current-time" class="main_text" style="margin: 5px 0 5px 0;"></p>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const milliseconds = String(now.getMilliseconds()).padStart(3, '0');
+            const timeString = `${hours}:${minutes}:${seconds}.${milliseconds}`;
+            document.getElementById('current-time').textContent = timeString;
+        }
+
+        setInterval(updateTime, 50);
+        updateTime(); // Initial call
+
+        const infoToggle = document.getElementById('info-toggle');
+        const contactDetails = document.getElementById('contact-details');
+        const indicator = document.getElementById('indicator');
+
+        infoToggle.addEventListener('click', () => {
+            contactDetails.classList.toggle('hidden');
+            indicator.classList.toggle('rotated');
+        });
+    </script>
+</body>
+</html>
