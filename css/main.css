@@ -94,6 +94,11 @@ a {
   font-style: italic;
 }
 
+:root {
+ --text-color: #000;
+ --background-color: #fff;
+}
+
 body, html {
     height: 100%;
     margin: 0;
@@ -102,6 +107,9 @@ body, html {
     font-family: "IBM Plex Mono", monospace;
     font-weight: 400;
     font-style: normal;
+ color: var(--text-color);
+ background-color: var(--background-color);
+    user-select: none;
 }
 
 #container {
@@ -110,6 +118,7 @@ body, html {
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
+    z-index: 1;
 }
 
 #indicator {
@@ -130,11 +139,13 @@ body, html {
     max-height: 100px; /* Adjust as needed */
     overflow: hidden;
     transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1); /* Apple's spring animation style */
+    margin-bottom: 5px;
 }
 
 #contact-details.hidden {
     opacity: 0;
     max-height: 0;
+    margin-bottom: 0;
 }
 
 #contact-table {
@@ -148,7 +159,7 @@ body, html {
 
 .contact-label, .contact-value, .contact-line > span:nth-child(2) {
     display: table-cell;
-    padding: 2px;
+    padding: 4px;
 }
 
 .contact-label {
@@ -157,6 +168,7 @@ body, html {
 
 .contact-value {
     text-align: left;
+    user-select: text;
 }
 
 .main_text {
@@ -167,11 +179,93 @@ body, html {
 }
 
 #current-time {
-    color: gray;
+ color: var(--current-time-color, gray); /* Default to gray if not overridden */
 }
 
 .main-text-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.contact-value a {
+    position: relative;
+    display: inline-block;
+}
+
+.contact-value a::after {
+    content: '';  
+    position: absolute;
+    left: 0;
+    bottom: 0px; /* Adjust as needed */
+    width: 100%;
+    height: 1px; /* Thickness of the underline */
+    background-color: currentColor; /* Inherit color from the link */
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
+
+.contact-value a:hover::after {
+    opacity: 1;
+}
+
+.main-text-container h1,
+#current-time {
+    transition: filter 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+#container.info-active .main-text-container h1,
+#container.info-active #current-time {
+    filter: blur(4px);
+    opacity: 0.5;
+}
+
+/* Background effects for info toggle */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    pointer-events: none;
+    z-index: 0;
+}
+
+body.info-active::after {
+    opacity: 0.05;
+}
+
+#container::before {
+    content: '';
+    position: absolute;
+    top: 110px; /* Centered on the expanded info elements */
+    left: 50%;
+    width: 700px; /* Wider for ellipse shape */
+    height: 400px; /* Shorter for ellipse shape */
+    transform: translate(-50%, -50%); /* Center the glow horizontally and vertically on the anchor */
+    background: radial-gradient(ellipse, rgb(255, 255, 255, 1) 0%, transparent 70%);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: -1;
+}
+
+#container.info-active::before {
+    opacity: 1;
+}
+
+
+@media (prefers-color-scheme: dark) {
+ :root {
+ --text-color: #fff;
+ --background-color: #121212;
+ --current-time-color: #aaa;
+ }
+ #container::before {
+ background: radial-gradient(ellipse, rgba(255, 255, 255, 0.13) 0%, transparent 65%);
+ }
 }

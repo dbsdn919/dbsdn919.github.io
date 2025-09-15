@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/main.css">
     
 </head>
-<body>
+<body oncontextmenu="return false;">
     <div id="container">
         <div class="main-text-container">
             <h1 class="main_text" style="margin: 5px 0 5px 0;">KIMYUNU</h1>
@@ -41,10 +41,13 @@
         const infoToggle = document.getElementById('info-toggle');
         const contactDetails = document.getElementById('contact-details');
         const indicator = document.getElementById('indicator');
+        const container = document.getElementById('container');
 
         infoToggle.addEventListener('click', () => {
             contactDetails.classList.toggle('hidden');
             indicator.classList.toggle('rotated');
+            container.classList.toggle('info-active');
+            document.body.classList.toggle('info-active');
         });
     </script>
 </body>
